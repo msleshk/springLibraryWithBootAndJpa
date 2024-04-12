@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All people</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .person-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .person-list {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .person {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .person-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .person-name a {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .person-name a:hover {
+            text-decoration: underline;
+        }
+
+        .person-age {
+            color: #777;
+        }
+
+        .add-person-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .add-person-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-person-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>All people</h1>
+
+<div class="person-container">
+    <div class="person-list">
+        <div th:each="person : ${people}" class="person">
+            <div class="person-info">
+                <div class="person-name">
+                    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
+                </div>
+                <div class="person-age" th:text="'Age: ' + ${person.getAge()}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="add-person-container">
+    <a th:href="@{/people/new}" class="add-person-link">Add new person</a>
+</div>
+
+</body>
+</html>

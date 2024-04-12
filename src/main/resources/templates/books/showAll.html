@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .book-item {
+            margin-bottom: 10px;
+        }
+        .book-link {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .book-link:hover {
+            background-color: #e0e0e0;
+        }
+        .new-book-link {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .new-book-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>All Books</h1>
+    <ul class="book-list">
+        <div th:each="book : ${books}" class="book-item">
+            <li>
+                <a th:href="@{/books/{id}(id=${book.getId()})}" class="book-link" th:text="${book.getName()}"></a>
+            </li>
+        </div>
+    </ul>
+    <a th:href="@{/books/new}" class="new-book-link">New Book</a>
+</div>
+</body>
+</html>

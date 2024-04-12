@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .book-label {
+            font-size: 18px;
+            color: #000;
+            margin-bottom: 5px;
+        }
+        .book-value {
+            font-size: 16px;
+            color: #007bff;
+        }
+        .owner-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        form {
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Show Book</h1>
+    <p class="book-label">Book name:</p>
+    <p class="book-value" th:text="${book.getName()}"></p>
+    <p class="book-label">Author:</p>
+    <p class="book-value" th:text="${book.getAuthor()}"></p>
+    <p class="book-label">Year:</p>
+    <p class="book-value" th:text="${book.getYearOfCreation()}"></p>
+    <div th:if="${book.getOwner() == null}" class="owner-info">
+        <p>This book is currently free.</p>
+        <form th:method="PATCH" th:action="@{/books/{id}/addBookOwner(id=${book.getId()})}">
+            <label for="person">Choose a person:</label>
+            <select id="person" name="personId">
+                <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
+            </select>
+            <input type="submit" value="Add Book Owner">
+        </form>
+    </div>
+    <div th:if="${book.getOwner() != null}" class="owner-info">
+        <p>Book owner right now:</p>
+        <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
+        <form th:method="PATCH" th:action="@{/books/{id}/freeBook(id=${book.getId()})}">
+            <input type="submit" value="Free the book">
+        </form>
+    </div>
+    <br>
+    <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Update</a>
+    <br>
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+        <input type="submit" value="Delete">
+    </form>
+</div>
+</body>
+</html>
